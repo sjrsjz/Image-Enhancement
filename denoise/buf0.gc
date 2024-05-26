@@ -42,36 +42,6 @@ float rand(vec2 p)
     p3 += dot(p3, p3.yzx + 33.33);
     return fract((p3.x + p3.y) * p3.z);
 }
-void Edge(){
-    vec4 a[5];float d00;
-    a[0]=Load(lp+ivec2(-1,0));
-    a[1]=Load(lp+ivec2(1,0));
-    a[2]=Load(lp+ivec2(0,-1));
-    a[3]=Load(lp+ivec2(0,1));
-    a[4]=Load();
-    d00=length(abs(a[0]+a[1]-2*a[4])+abs(a[2]+a[3]-2*a[4]));//Laplacian
-    a[4].z=(d00<=0.075?1:0);
-    imageStore(data_,lp,a[4]);
-}
-void DSSAA(){
-    vec4 a[5],b[5];float d00;
-    a[0]=imageLoad(data_,lp+ivec2(-1,0));
-    a[1]=imageLoad(data_,lp+ivec2(1,0));
-    a[2]=imageLoad(data_,lp+ivec2(0,-1));
-    a[3]=imageLoad(data_,lp+ivec2(0,1));
-    a[4]=imageLoad(data_,lp);
-    b[0]=Load(lp+ivec2(-1,0));
-    b[1]=Load(lp+ivec2(1,0));
-    b[2]=Load(lp+ivec2(0,-1));
-    b[3]=Load(lp+ivec2(0,1));
-    b[4]=Load();
-    vec4 c=vec4(0);float S=0;
-    if(a[0].z==1){c+=b[0];S++;}
-    if(a[1].z==1){c+=b[1];S++;}
-    if(a[2].z==1){c+=b[2];S++;}
-    if(a[3].z==1){c+=b[3];S++;}
-    Store((b[4]+c)/(1+S));
-}
 vec4 sampleF(vec2 p,float r,out vec4 D0){
     int j=0;
     vec4 tmp=vec4(0);
