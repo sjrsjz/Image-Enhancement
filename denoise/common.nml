@@ -1,0 +1,22 @@
+vec2 rot(vec2 a,float theta){
+    return a.xx*vec2(cos(theta),sin(theta))+a.yy*vec2(-sin(theta),cos(theta));
+}
+
+vec2 cMul(vec2 a, vec2 b) {
+	return vec2(a.x*b.x-a.y*b.y,a.x*b.y+a.y*b.x);
+}
+vec2 cLog(vec2 a) {
+	float b =  atan(a.y,a.x);
+	if (b<0.0) b+=2.0*3.1415926535;
+	return vec2(log(length(a)),b);
+}/*sjz1*/
+vec2 cExp(vec2 z) {
+	return exp(z.x) * vec2(cos(z.y), sin(z.y));
+}
+vec2 cPow(vec2 z, vec2 a) {
+	return cExp(cMul(cLog(z), a));
+}
+vec2 cDiv(vec2 a, vec2 b){
+  float d = dot(b,b);
+  return vec2(dot(a,b),a.y*b.x-a.x*b.y)/d;
+}
